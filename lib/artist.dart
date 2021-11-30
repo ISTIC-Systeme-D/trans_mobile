@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 /// Page affichant les détails d'un artiste
 /// @author Julien Cochet
@@ -15,6 +16,13 @@ class ArtistPage extends StatefulWidget {
 }
 
 class _ArtistPageState extends State<ArtistPage> {
+  static const String _url =
+      'https://open.spotify.com/track/4cOdK2wGLETKBW3PvgPWqT?si=84f10eb924b04704';
+
+  void _launchURL() async {
+    if (!await launch(_url)) throw 'Could not launch $_url';
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -69,9 +77,7 @@ class _ArtistPageState extends State<ArtistPage> {
             )));
       }),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          //https://open.spotify.com/track/4cOdK2wGLETKBW3PvgPWqT?si=84f10eb924b04704
-        },
+        onPressed: _launchURL,
         tooltip: 'Écouter',
         child: const Icon(Icons.play_arrow),
       ),
