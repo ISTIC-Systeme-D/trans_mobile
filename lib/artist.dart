@@ -21,18 +21,59 @@ class _ArtistPageState extends State<ArtistPage> {
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      body: Center(
-        child: Column(
-          children: [
-            Container(
-              padding: const EdgeInsets.all(8),
-              child: const Align(
-                  alignment: Alignment.bottomCenter, child: Text('Artiste')),
-              color:
-                  Colors.primaries[Random().nextInt(Colors.primaries.length)],
-            ),
-          ],
-        ),
+      body: OrientationBuilder(builder: (context, orientation) {
+        return Align(
+            alignment: Alignment.topCenter,
+            child: SingleChildScrollView(
+                child: Column(
+              children: [
+                AspectRatio(
+                    aspectRatio: (orientation == Orientation.portrait)
+                        ? (3 / 2)
+                        : (6 / 1),
+                    child: Container(
+                      alignment: Alignment.bottomCenter,
+                      child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: const [Text('Artiste'), Text('France')]),
+                      color: Colors
+                          .primaries[Random().nextInt(Colors.primaries.length)],
+                    )),
+                const Card(
+                  child: ListTile(
+                    title: Text('Jour 1 - 14h00'),
+                    subtitle: Text('Salle A'),
+                  ),
+                ),
+                const Card(
+                  child: ListTile(
+                    title: Text('Jour 2 - 20h00'),
+                    subtitle: Text('Salle B'),
+                  ),
+                ),
+                const Card(
+                  child: ListTile(
+                    title: Text('Jour 3 - 22h00'),
+                    subtitle: Text('Salle C'),
+                  ),
+                ),
+                const Card(
+                  child: ListTile(
+                    title: Text('Jour 4 - 22h00'),
+                    subtitle: Text('Salle B'),
+                  ),
+                ),
+              ],
+            )));
+      }),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          //https://open.spotify.com/track/4cOdK2wGLETKBW3PvgPWqT?si=84f10eb924b04704
+        },
+        tooltip: 'Écouter',
+        child: const Icon(Icons.play_arrow),
       ),
     );
   }

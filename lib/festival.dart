@@ -56,7 +56,7 @@ class _FestivalPageState extends State<FestivalPage> {
   Widget build(BuildContext context) {
     return DefaultTabController(
       length: tabs.length,
-      child: Builder(builder: (BuildContext context) {
+      child: OrientationBuilder(builder: (BuildContext context, orientation) {
         final TabController tabController = DefaultTabController.of(context)!;
         tabController.addListener(() {
           if (!tabController.indexIsChanging) {
@@ -76,13 +76,12 @@ class _FestivalPageState extends State<FestivalPage> {
               return Center(
                   child: GridView.builder(
                       gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
+                          SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: (orientation == Orientation.portrait) ? 2 :6,
                       ),
                       itemBuilder: (BuildContext context, int index) {
                         return InkWell(
                           child: Container(
-                            padding: const EdgeInsets.all(8),
                             child: const Align(
                                 alignment: Alignment.bottomCenter,
                                 child: Text('Artiste')),

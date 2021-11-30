@@ -16,10 +16,9 @@ class App extends StatelessWidget {
     return MaterialApp(
       title: 'Les Trans',
       theme: ThemeData(
-        primarySwatch: Colors.deepPurple,
+            primarySwatch: Colors.blue,
       ),
       home: const FestivalPage(title: 'Festival'),
     );
   }
 }
-

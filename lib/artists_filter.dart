@@ -47,13 +47,28 @@ class _ArtistsFilterPageState extends State<ArtistsFilterPage> {
             child: Column(children: _generateExpansionTiles(_options))),
       ),
       bottomNavigationBar: BottomAppBar(
-        child: ElevatedButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          child: const Text('Filtrer'),
-        ),
-      ),
+          child: Row(
+        children: [
+          const Spacer(),
+          OutlinedButton(
+              onPressed: () {
+                setState(() {
+                  _options.forEach((key, value) {
+                    value.updateAll((key, value) => true);
+                  });
+                });
+              },
+              child: const Text('Réinitialiser')),
+          const Spacer(),
+          ElevatedButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            child: const Text('Filtrer'),
+          ),
+          const Spacer(),
+        ],
+      )),
     );
   }
 
