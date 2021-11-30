@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 
-/**
- * Page affichant les options de filtrage pour l'afffichage des artistes
- * @author Julien Cochet
- */
+/// Page affichant les options de filtrage pour l'afffichage des artistes
+/// @author Julien Cochet
 
 class ArtistsFilterPage extends StatefulWidget {
   const ArtistsFilterPage({Key? key, required this.title}) : super(key: key);
@@ -15,12 +13,12 @@ class ArtistsFilterPage extends StatefulWidget {
 }
 
 class _ArtistsFilterPageState extends State<ArtistsFilterPage> {
-  static Map<String, bool> _countries = {
+  static final Map<String, bool> _countries = {
     'France': true,
     'Turquie': true,
     'Congo': true
   };
-  static Map<String, bool> _years = {
+  static final Map<String, bool> _years = {
     '2021': true,
     '2020': true,
     '2019': true,
