@@ -1,4 +1,7 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
+import 'package:trans_mobile/artist.dart';
 import 'package:trans_mobile/artists.dart';
 
 /// Page affichant les artistes pour une journée
@@ -36,7 +39,7 @@ class _FestivalPageState extends State<FestivalPage> {
               context,
               PageRouteBuilder(
                 pageBuilder: (context, animation1, animation2) =>
-                    const ArtistsPage(title: 'Artists'),
+                    const ArtistsPage(title: 'Artistes'),
                 transitionDuration: Duration.zero,
               ),
             );
@@ -77,8 +80,24 @@ class _FestivalPageState extends State<FestivalPage> {
                         crossAxisCount: 2,
                       ),
                       itemBuilder: (BuildContext context, int index) {
-                        return const Card(
-                          child: Center(child: Text('Artiste')),
+                        return InkWell(
+                          child: Container(
+                            padding: const EdgeInsets.all(8),
+                            child: const Align(
+                                alignment: Alignment.bottomCenter,
+                                child: Text('Artiste')),
+                            color: Colors.primaries[
+                                Random().nextInt(Colors.primaries.length)],
+                          ),
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    const ArtistPage(title: 'Artiste'),
+                              ),
+                            );
+                          },
                         );
                       }));
             }).toList(),
@@ -95,46 +114,10 @@ class _FestivalPageState extends State<FestivalPage> {
               ),
             ],
             currentIndex: _selectedIndex,
-            selectedItemColor: Colors.amber[800],
             onTap: _onItemTapped,
           ),
         );
       }),
     );
   }
-/*
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: Center(
-          child: GridView.builder(
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-              ),
-              itemBuilder: (BuildContext context, int index) {
-                return const Card(
-                  child: Center(child: Text('Artiste')),
-                );
-              })),
-      bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.calendar_today),
-            label: 'Dates',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: 'Artistes',
-          ),
-        ],
-        currentIndex: _selectedIndex,
-        selectedItemColor: Colors.amber[800],
-        onTap: _onItemTapped,
-      ),
-    );
-  }
-   */
 }

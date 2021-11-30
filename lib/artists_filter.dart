@@ -39,7 +39,7 @@ class _ArtistsFilterPageState extends State<ArtistsFilterPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Filtrer'),
+        title: Text(widget.title),
       ),
       body: Align(
         alignment: Alignment.topCenter,
@@ -48,7 +48,9 @@ class _ArtistsFilterPageState extends State<ArtistsFilterPage> {
       ),
       bottomNavigationBar: BottomAppBar(
         child: ElevatedButton(
-          onPressed: () {Navigator.pop(context);},
+          onPressed: () {
+            Navigator.pop(context);
+          },
           child: const Text('Filtrer'),
         ),
       ),

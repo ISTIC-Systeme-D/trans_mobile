@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:trans_mobile/artist.dart';
 import 'package:trans_mobile/artists_filter.dart';
 import 'package:trans_mobile/festival.dart';
 
@@ -51,10 +52,18 @@ class _ArtistsPageState extends State<ArtistsPage> {
       body: Center(
         child: ListView.builder(
           itemBuilder: (BuildContext context, int index) {
-            return const Card(
+            return Card(
               child: ListTile(
-                leading: CircleAvatar(child: Text('A')),
-                title: Text('Artiste'),
+                leading: const CircleAvatar(child: Text('A')),
+                title: const Text('Artiste'),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const ArtistPage(title: 'Artiste'),
+                    ),
+                  );
+                },
               ),
             );
           },
@@ -72,7 +81,6 @@ class _ArtistsPageState extends State<ArtistsPage> {
           ),
         ],
         currentIndex: _selectedIndex,
-        selectedItemColor: Colors.amber[800],
         onTap: _onItemTapped,
       ),
       floatingActionButton: FloatingActionButton(
