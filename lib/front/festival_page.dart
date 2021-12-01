@@ -1,8 +1,9 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:trans_mobile/artist.dart';
-import 'package:trans_mobile/artists.dart';
+import 'package:trans_mobile/front/artist_page.dart';
+import 'package:trans_mobile/front/artists_page.dart';
+import 'package:trans_mobile/front/database_test_page.dart';
 
 /// Page affichant les artistes pour une journée
 /// @author Julien Cochet
@@ -71,13 +72,31 @@ class _FestivalPageState extends State<FestivalPage> {
               tabs: tabs,
             ),
           ),
+          drawer: Drawer(
+            child: ListView(
+              children: [
+                ListTile(
+                  title: const Text('Realtime Database'),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            const DatabasePage(title: 'Realtime Database'),
+                      ),
+                    );
+                  },
+                ),
+              ],
+            ),
+          ),
           body: TabBarView(
             children: tabs.map((Tab tab) {
               return Center(
                   child: GridView.builder(
-                      gridDelegate:
-                          SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: (orientation == Orientation.portrait) ? 2 :6,
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount:
+                            (orientation == Orientation.portrait) ? 2 : 6,
                       ),
                       itemBuilder: (BuildContext context, int index) {
                         return InkWell(

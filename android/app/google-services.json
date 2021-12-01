@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "462217967922",
+    "firebase_url": "https://transweb-95021-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "transweb-95021",
+    "storage_bucket": "transweb-95021.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:462217967922:android:47e6007825b1d379c9bf2b",
+        "android_client_info": {
+          "package_name": "fr.istic.trans_mobile"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "462217967922-ik3132i17re0ir9oqlpotkunqql09e5p.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBW3ZOLDOx8CIFA1NWO1qT1w-FPo2rWBu4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "462217967922-ik3132i17re0ir9oqlpotkunqql09e5p.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
