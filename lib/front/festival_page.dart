@@ -1,9 +1,12 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:trans_mobile/back/model.dart';
 import 'package:trans_mobile/front/artist_page.dart';
 import 'package:trans_mobile/front/artists_page.dart';
 import 'package:trans_mobile/front/database_test_page.dart';
+import 'package:trans_mobile/front/realtime_test.dart';
 
 /// Page affichant les artistes pour une journée
 /// @author Julien Cochet
@@ -82,7 +85,9 @@ class _FestivalPageState extends State<FestivalPage> {
                       context,
                       MaterialPageRoute(
                         builder: (context) =>
-                            const DatabasePage(title: 'Realtime Database'),
+                            ChangeNotifierProvider<TransModel>(
+                                create: (_) => TransModel(),
+                                child: ArtistsView()),
                       ),
                     );
                   },

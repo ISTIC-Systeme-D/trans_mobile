@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:trans_mobile/front/artist_page.dart';
 import 'package:trans_mobile/front/artists_filter_page.dart';
-import 'package:trans_mobile/back/data_service.dart';
 import 'package:trans_mobile/front/festival_page.dart';
-import 'package:trans_mobile/front/status_page.dart';
 
 /// Page affichant les artistes
 /// @author Julien Cochet
@@ -51,27 +49,6 @@ class _ArtistsPageState extends State<ArtistsPage> {
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      /*
-      drawer: Drawer(
-        child: ListView(
-          children: [
-            ListTile(
-              title: const Text('Statut du serveur'),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => StatusPage(
-                        title: 'Statut du serveur',
-                        serverInfo: fetchServerInfo()),
-                  ),
-                );
-              },
-            ),
-          ],
-        ),
-      ),
-       */
       body: Center(
         child: ListView.builder(
           itemBuilder: (BuildContext context, int index) {
