@@ -5,18 +5,9 @@ import 'package:provider/provider.dart';
 import 'package:trans_mobile/back/model.dart';
 import 'package:trans_mobile/front/artist_page.dart';
 import 'package:trans_mobile/front/artists_page.dart';
-import 'package:trans_mobile/front/realtime_test.dart';
 
 /// Page affichant les artistes pour une journée
 /// @author Julien Cochet
-
-const List<Tab> tabs = <Tab>[
-  Tab(text: 'Jour 1'),
-  Tab(text: 'Jour 2'),
-  Tab(text: 'Jour 3'),
-  Tab(text: 'Jour 4'),
-  Tab(text: 'Jour 5'),
-];
 
 class FestivalPage extends StatefulWidget {
   const FestivalPage({Key? key, required this.title}) : super(key: key);
@@ -55,47 +46,62 @@ class _FestivalPageState extends State<FestivalPage> {
     });
   }
 
+  List<Tab> _generateTabs(TransModel model) {
+    List<Tab> tabs = [];
+    for (var date in model.datesOfThisYear) {
+      tabs.add(Tab(text: date));
+    }
+    return tabs;
+  }
+
+  List<InkWell> _generateArtistsInkWells(TransModel model, String date) {
+    print('date: ' + date);
+    List<InkWell> inkWells = [];
+    model.getFilteredArtistsByDates([date]).forEach((artist) {
+      inkWells.add(InkWell(
+        child: Container(
+          child: Align(
+              alignment: Alignment.bottomCenter,
+              child: Text(artist.fields['artistes'])),
+          color: Colors.primaries[Random().nextInt(Colors.primaries.length)],
+        ),
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) =>
+                  ArtistPage(title: artist.fields['artistes'], artist: artist),
+            ),
+          );
+        },
+      ));
+    });
+    return inkWells;
+  }
+
   @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
-      length: tabs.length,
-      child: OrientationBuilder(builder: (BuildContext context, orientation) {
-        final TabController tabController = DefaultTabController.of(context)!;
-        tabController.addListener(() {
-          if (!tabController.indexIsChanging) {
-            // Your code goes here.
-            // To get index of current tab use tabController.index
-          }
-        });
-        return Scaffold(
-          appBar: AppBar(
-            title: Text(widget.title),
-            bottom: const TabBar(
-              tabs: tabs,
+    return Consumer<TransModel>(builder: (context, model, child) {
+      List<Tab> tabs = _generateTabs(model);
+      return DefaultTabController(
+        length: tabs.length,
+        child: OrientationBuilder(builder: (BuildContext context, orientation) {
+          final TabController tabController = DefaultTabController.of(context)!;
+          tabController.addListener(() {
+            if (!tabController.indexIsChanging) {
+              // Your code goes here.
+              // To get index of current tab use tabController.index
+            }
+          });
+          return Scaffold(
+            appBar: AppBar(
+              title: Text(widget.title),
+              bottom: TabBar(
+                tabs: tabs,
+                isScrollable: true,
+              ),
             ),
-          ),
-          drawer: Drawer(
-            child: ListView(
-              children: [
-                ListTile(
-                  title: const Text('Realtime Database'),
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) =>
-                            ChangeNotifierProvider<TransModel>(
-                                create: (_) => TransModel(),
-                                child: ArtistsView()),
-                      ),
-                    );
-                  },
-                ),
-              ],
-            ),
-          ),
-          body: Consumer<TransModel>(builder: (context, model, child) {
-            return TabBarView(
+            body: TabBarView(
               children: tabs.map((Tab tab) {
                 return Center(
                     child: GridView(
@@ -103,46 +109,27 @@ class _FestivalPageState extends State<FestivalPage> {
                           crossAxisCount:
                               (orientation == Orientation.portrait) ? 2 : 6,
                         ),
-                        children: [
-                      ...model.artists.map((artist) => InkWell(
-                            child: Container(
-                              child: Align(
-                                  alignment: Alignment.bottomCenter,
-                                  child: Text(artist.fields['artistes'])),
-                              color: Colors.primaries[
-                                  Random().nextInt(Colors.primaries.length)],
-                            ),
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => ArtistPage(
-                                      title: artist.fields['artistes'],
-                                      artist: artist),
-                                ),
-                              );
-                            },
-                          ))
-                    ]));
+                        children: _generateArtistsInkWells(
+                            model, tab.text.toString())));
               }).toList(),
-            );
-          }),
-          bottomNavigationBar: BottomNavigationBar(
-            items: const <BottomNavigationBarItem>[
-              BottomNavigationBarItem(
-                icon: Icon(Icons.calendar_today),
-                label: 'Dates',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.person),
-                label: 'Artistes',
-              ),
-            ],
-            currentIndex: _selectedIndex,
-            onTap: _onItemTapped,
-          ),
-        );
-      }),
-    );
+            ),
+            bottomNavigationBar: BottomNavigationBar(
+              items: const <BottomNavigationBarItem>[
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.calendar_today),
+                  label: 'Dates',
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.person),
+                  label: 'Artistes',
+                ),
+              ],
+              currentIndex: _selectedIndex,
+              onTap: _onItemTapped,
+            ),
+          );
+        }),
+      );
+    });
   }
 }

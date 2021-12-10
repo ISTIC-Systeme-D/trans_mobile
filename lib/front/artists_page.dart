@@ -58,7 +58,7 @@ class _ArtistsPageState extends State<ArtistsPage> {
     widget.artistsFilter!.yearsFilter.forEach((key, value) {
       if (value) _years.add(key);
     });
-    model.getFilteredArtists(_countries, _years).forEach((artist) {
+    model.getFilteredArtistsByCountriesAndYears(_countries, _years).forEach((artist) {
       cards.add(Card(
         child: ListTile(
           leading: Text(artist.fields['artistes'][0]),

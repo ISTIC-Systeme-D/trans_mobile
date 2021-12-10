@@ -8,6 +8,35 @@
   "client": [
     {
       "client_info": {
+        "mobilesdk_app_id": "1:462217967922:android:6532fafe18b0ec7dc9bf2b",
+        "android_client_info": {
+          "package_name": "com.example.cloud_messaging"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "462217967922-ik3132i17re0ir9oqlpotkunqql09e5p.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBW3ZOLDOx8CIFA1NWO1qT1w-FPo2rWBu4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "462217967922-ik3132i17re0ir9oqlpotkunqql09e5p.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:462217967922:android:47e6007825b1d379c9bf2b",
         "android_client_info": {
           "package_name": "fr.istic.trans_mobile"
