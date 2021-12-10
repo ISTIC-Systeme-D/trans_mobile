@@ -1,26 +1,54 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:trans_mobile/back/artist.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 /// Page affichant les détails d'un artiste
 /// @author Julien Cochet
 
 class ArtistPage extends StatefulWidget {
-  const ArtistPage({Key? key, required this.title}) : super(key: key);
+  const ArtistPage({Key? key, required this.title, required this.artist})
+      : super(key: key);
 
   final String title;
+  final Artist artist;
 
   @override
   State<ArtistPage> createState() => _ArtistPageState();
 }
 
 class _ArtistPageState extends State<ArtistPage> {
-  static const String _url =
-      'https://open.spotify.com/track/4cOdK2wGLETKBW3PvgPWqT?si=84f10eb924b04704';
+  static const String _url = 'https://open.spotify.com/';
 
-  void _launchURL() async {
-    if (!await launch(_url)) throw 'Could not launch $_url';
+  _launchURL(String spotify) async {
+    List<String> spotifyList = spotify.split(':');
+    if (!await launch(_url + spotifyList[1] + '/' + spotifyList[2])) {
+      throw 'Could not launch $_url';
+    }
+  }
+
+  List<Widget> _generateEventCards() {
+    List<String> nums = ['1ere', '2eme', '3eme', '4eme'];
+    List<Card> cards = [];
+    for (var num in nums) {
+      if (widget.artist.fields[num + '_date'] != null &&
+          widget.artist.fields[num + '_date'] != '') {
+        cards.add(_generateEventCard(num));
+      } else {
+        return cards;
+      }
+    }
+    return cards;
+  }
+
+  Card _generateEventCard(String num) {
+    return Card(
+      child: ListTile(
+        title: Text(widget.artist.fields[num + '_date']),
+        subtitle: Text(widget.artist.fields[num + '_salle']),
+      ),
+    );
   }
 
   @override
@@ -45,39 +73,26 @@ class _ArtistPageState extends State<ArtistPage> {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisSize: MainAxisSize.max,
                           mainAxisAlignment: MainAxisAlignment.end,
-                          children: const [Text('Artiste'), Text('France')]),
+                          children: [
+                            Text(widget.artist.fields['artistes']),
+                            Text(widget.artist.fields['origine_pays1'])
+                          ]),
                       color: Colors
                           .primaries[Random().nextInt(Colors.primaries.length)],
                     )),
-                const Card(
-                  child: ListTile(
-                    title: Text('Jour 1 - 14h00'),
-                    subtitle: Text('Salle A'),
-                  ),
-                ),
-                const Card(
-                  child: ListTile(
-                    title: Text('Jour 2 - 20h00'),
-                    subtitle: Text('Salle B'),
-                  ),
-                ),
-                const Card(
-                  child: ListTile(
-                    title: Text('Jour 3 - 22h00'),
-                    subtitle: Text('Salle C'),
-                  ),
-                ),
-                const Card(
-                  child: ListTile(
-                    title: Text('Jour 4 - 22h00'),
-                    subtitle: Text('Salle B'),
-                  ),
+                Column(
+                  children: _generateEventCards(),
                 ),
               ],
             )));
       }),
       floatingActionButton: FloatingActionButton(
-        onPressed: _launchURL,
+        onPressed: () {
+          if (widget.artist.fields['spotify'] != null &&
+              widget.artist.fields['spotify'] != '') {
+            _launchURL(widget.artist.fields['spotify']);
+          }
+        },
         tooltip: 'Écouter',
         child: const Icon(Icons.play_arrow),
       ),

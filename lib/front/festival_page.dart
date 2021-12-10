@@ -42,7 +42,7 @@ class _FestivalPageState extends State<FestivalPage> {
               context,
               PageRouteBuilder(
                 pageBuilder: (context, animation1, animation2) =>
-                    const ArtistsPage(title: 'Artistes'),
+                    ArtistsPage(title: 'Artistes'),
                 transitionDuration: Duration.zero,
               ),
             );
@@ -116,8 +116,9 @@ class _FestivalPageState extends State<FestivalPage> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) =>
-                                      const ArtistPage(title: 'Artiste'),
+                                  builder: (context) => ArtistPage(
+                                      title: artist.fields['artistes'],
+                                      artist: artist),
                                 ),
                               );
                             },

@@ -1,40 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:trans_mobile/back/artists_filter.dart';
+import 'package:trans_mobile/front/artists_page.dart';
 
 /// Page affichant les options de filtrage pour l'afffichage des artistes
 /// @author Julien Cochet
 
 class ArtistsFilterPage extends StatefulWidget {
-  const ArtistsFilterPage({Key? key, required this.title}) : super(key: key);
+  const ArtistsFilterPage(
+      {Key? key, required this.title, required this.artistsFilter})
+      : super(key: key);
 
   final String title;
+  final ArtistsFilter artistsFilter;
 
   @override
   State<ArtistsFilterPage> createState() => _ArtistsFilterPageState();
 }
 
 class _ArtistsFilterPageState extends State<ArtistsFilterPage> {
-  static final Map<String, bool> _countries = {
-    'France': true,
-    'Turquie': true,
-    'Congo': true
-  };
-  static final Map<String, bool> _years = {
-    '2021': true,
-    '2020': true,
-    '2019': true,
-    '2018': true,
-    '2017': true,
-    '2016': true,
-    '2015': true,
-    '2014': true,
-    '2013': true,
-    '2012': true
-  };
-  final Map<String, Map<String, bool>> _options = {
-    'Pays': _countries,
-    'Éditions': _years
-  };
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,7 +27,9 @@ class _ArtistsFilterPageState extends State<ArtistsFilterPage> {
       body: Align(
         alignment: Alignment.topCenter,
         child: SingleChildScrollView(
-            child: Column(children: _generateExpansionTiles(_options))),
+            child: Column(
+                children:
+                    _generateExpansionTiles(widget.artistsFilter.filters))),
       ),
       bottomNavigationBar: BottomAppBar(
           child: Row(
@@ -53,7 +38,7 @@ class _ArtistsFilterPageState extends State<ArtistsFilterPage> {
           OutlinedButton(
               onPressed: () {
                 setState(() {
-                  _options.forEach((key, value) {
+                  widget.artistsFilter.filters.forEach((key, value) {
                     value.updateAll((key, value) => true);
                   });
                 });
@@ -62,7 +47,12 @@ class _ArtistsFilterPageState extends State<ArtistsFilterPage> {
           const Spacer(),
           ElevatedButton(
             onPressed: () {
-              Navigator.pop(context);
+              Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => ArtistsPage(
+                          title: 'Artistes',
+                          artistsFilter: widget.artistsFilter)));
             },
             child: const Text('Filtrer'),
           ),
