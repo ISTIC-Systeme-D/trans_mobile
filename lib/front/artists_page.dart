@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:trans_mobile/back/model.dart';
 import 'package:trans_mobile/front/artist_page.dart';
 import 'package:trans_mobile/front/artists_filter_page.dart';
 import 'package:trans_mobile/front/festival_page.dart';
@@ -49,25 +51,31 @@ class _ArtistsPageState extends State<ArtistsPage> {
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      body: Center(
-        child: ListView.builder(
-          itemBuilder: (BuildContext context, int index) {
-            return Card(
-              child: ListTile(
-                leading: const CircleAvatar(child: Text('A')),
-                title: const Text('Artiste'),
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const ArtistPage(title: 'Artiste'),
-                    ),
-                  );
-                },
-              ),
-            );
-          },
-        ),
+      body: Consumer<TransModel>(
+        builder: (context, model, child) {
+          return Center(
+              child: ListView(
+            children: [
+              ...model
+                  .getFilteredArtists(model.years, model.countries)
+                  .map((artist) => Card(
+                        child: ListTile(
+                          leading: Text(artist.fields['artistes'][0]),
+                          title: Text(artist.fields['artistes']),
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    const ArtistPage(title: 'Artiste'),
+                              ),
+                            );
+                          },
+                        ),
+                      ))
+            ],
+          ));
+        },
       ),
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[

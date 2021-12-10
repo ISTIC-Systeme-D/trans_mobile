@@ -1,5 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:trans_mobile/back/model.dart';
 import 'package:trans_mobile/front/festival_page.dart';
 
 /// Main
@@ -17,12 +19,14 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Les Trans',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: const FestivalPage(title: 'Festival'),
-    );
+    return ChangeNotifierProvider(
+        create: (context) => TransModel(),
+        child: MaterialApp(
+          title: 'Les Trans',
+          theme: ThemeData(
+            primarySwatch: Colors.blue,
+          ),
+          home: const FestivalPage(title: 'Festival'),
+        ));
   }
 }

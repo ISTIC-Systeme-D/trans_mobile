@@ -5,7 +5,6 @@ import 'package:provider/provider.dart';
 import 'package:trans_mobile/back/model.dart';
 import 'package:trans_mobile/front/artist_page.dart';
 import 'package:trans_mobile/front/artists_page.dart';
-import 'package:trans_mobile/front/database_test_page.dart';
 import 'package:trans_mobile/front/realtime_test.dart';
 
 /// Page affichant les artistes pour une journée
@@ -95,36 +94,38 @@ class _FestivalPageState extends State<FestivalPage> {
               ],
             ),
           ),
-          body: TabBarView(
-            children: tabs.map((Tab tab) {
-              return Center(
-                  child: GridView.builder(
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount:
-                            (orientation == Orientation.portrait) ? 2 : 6,
-                      ),
-                      itemBuilder: (BuildContext context, int index) {
-                        return InkWell(
-                          child: Container(
-                            child: const Align(
-                                alignment: Alignment.bottomCenter,
-                                child: Text('Artiste')),
-                            color: Colors.primaries[
-                                Random().nextInt(Colors.primaries.length)],
-                          ),
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) =>
-                                    const ArtistPage(title: 'Artiste'),
-                              ),
-                            );
-                          },
-                        );
-                      }));
-            }).toList(),
-          ),
+          body: Consumer<TransModel>(builder: (context, model, child) {
+            return TabBarView(
+              children: tabs.map((Tab tab) {
+                return Center(
+                    child: GridView(
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount:
+                              (orientation == Orientation.portrait) ? 2 : 6,
+                        ),
+                        children: [
+                      ...model.artists.map((artist) => InkWell(
+                            child: Container(
+                              child: Align(
+                                  alignment: Alignment.bottomCenter,
+                                  child: Text(artist.fields['artistes'])),
+                              color: Colors.primaries[
+                                  Random().nextInt(Colors.primaries.length)],
+                            ),
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      const ArtistPage(title: 'Artiste'),
+                                ),
+                              );
+                            },
+                          ))
+                    ]));
+              }).toList(),
+            );
+          }),
           bottomNavigationBar: BottomNavigationBar(
             items: const <BottomNavigationBarItem>[
               BottomNavigationBarItem(
